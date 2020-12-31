@@ -75,7 +75,7 @@ export default {
   
         }  ,
         donate() {
-            alert('donate');
+          this.$store.commit('insert');
         }
     },
     
