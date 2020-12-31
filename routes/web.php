@@ -13,20 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-// Auth::routes();
-
-// Route::get('/home', 'HomeController@index')->name('home');
-
-
-// Route::get('/route-1', function(){
-//     return 'Selamat Datang di route 1';
-// })->middleware(['auth','email.verified']);
-// Route::get('/route-2',function(){
-//     return 'Selamat Datang di route 2';
-// })->middleware(['auth','email.verified','admin']);
+//  Route::get('/{any?}', function(){
+//     return view('app');
+// })->where('any','.*');
+Route::view('/{any?}','app')->where('any','.*');
 
 
