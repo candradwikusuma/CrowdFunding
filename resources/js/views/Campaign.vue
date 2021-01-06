@@ -47,7 +47,7 @@
 </template>
 
 <script>
-
+import { mapActions, mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -74,17 +74,26 @@ export default {
             });
   
         }  ,
+        // ...mapMutations({
+        //   'donate':'transaction/insert'
+        // }),
+        ...mapMutations({
+          tambahTransaksi:'transaction/insert'
+        }),
+        ...mapActions({
+          setAlert:'alert/set'
+        }),
         donate() {
-          this.$store.commit('insert');
+          this.tambahTransaksi()
+          this.setAlert({
+            status:true,
+            color: 'light-blue darken-3',
+            text: 'Transaksi ditambahkan',
+          })
         }
     },
     
-//   },
 
-//   mounted() {
-//     document.title = this.title;
-//     this.getCampaign();
-//   },
 };
 </script>
 

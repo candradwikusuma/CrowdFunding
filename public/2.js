@@ -43,7 +43,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     CampaignItem: function CampaignItem() {
-      return __webpack_require__.e(/*! import() */ 5).then(__webpack_require__.bind(null, /*! ../components/CampaignItem */ "./resources/js/components/CampaignItem.vue"));
+      return __webpack_require__.e(/*! import() */ 0).then(__webpack_require__.bind(null, /*! ../components/CampaignItem */ "./resources/js/components/CampaignItem.vue"));
     }
   },
   data: function data() {

@@ -1,5 +1,6 @@
 <template>
     <v-app>
+        <alert-component></alert-component>
         <!-- sidebar -->
         <v-navigation-drawer app v-model="drawer">
 
@@ -49,7 +50,7 @@
 
         </v-navigation-drawer>
         <!-- header -->
-        <v-app-bar app color="success" dark v-if="isHome">
+        <v-app-bar app color="info" dark v-if="isHome">
             <v-app-bar-nav-icon @click.stop="drawer=!drawer"></v-app-bar-nav-icon>
 
             <v-toolbar-title>SanbercodeApps</v-toolbar-title>
@@ -57,9 +58,9 @@
             <v-spacer></v-spacer>
 
             <v-btn icon>
-                <v-badge  color="orange" overlap v-if="transaction>0">
+                <v-badge  color="orange" overlap v-if="transactions>0">
                     <template v-slot:badge>
-                        <span>{{transaction}}</span>
+                        <span>{{transactions}}</span>
                     </template>
                     <v-icon>mdi-cash-multiple</v-icon>
                 </v-badge>
@@ -78,7 +79,7 @@
             ></v-text-field>
         </v-app-bar>
 
-    <v-app-bar app color="success" dark v-else>
+    <v-app-bar app color="info" dark v-else>
       <v-btn icon @click.stop="$router.go(-1)">
         <v-icon>mdi-arrow-left-circle</v-icon>
       </v-btn>
@@ -86,9 +87,9 @@
       <v-spacer />
 
       <v-btn icon>
-        <v-badge color="orange" overlap v-if="transaction>0">
+        <v-badge color="orange" overlap v-if="transactions>0">
           <template v-slot:badge>
-            <span>{{ transaction }}</span>
+            <span>{{ transactions }}</span>
           </template>
           <v-icon>mdi-cash-multiple</v-icon>
         </v-badge>
@@ -100,7 +101,8 @@
           
             <!-- content -->
             <v-container>
-                <v-slider-y-transition v-model="value" step="0">
+                
+                <v-slider-y-transition>
                 <router-view></router-view>
                 </v-slider-y-transition>
             <!-- If using vue-router -->
@@ -119,26 +121,35 @@
     </v-app>
 </template>
 <script>
+import {mapGetters} from 'vuex'
+import AlertComponent from './components/AlertComponent.vue';
+
 export default {
     name:'app',
+    components: {
+        AlertComponent:() => import('./components/AlertComponent')
+    },
     data: ()=>({
         drawer:false,
         menus:[
             {title:'Home',icon:'mdi-home',route:'/'},
             {title:'Campaigns',icon:'mdi-hand-heart',route:'/campaigns'},
         ],
-        guest:true,
+        guest:false,
     }),
     computed: {
         isHome() {
-        return this.$route.path === "/" || this.$route.path === "/home";
+            return this.$route.path === "/" || this.$route.path === "/home";
         },
-        transaction(){
-            return this.$store.getters.transaction
-        }
-
-  
-  },
+        ...mapGetters({
+            'transactions':'transaction/transactions'
+        }),
+        // transaction(){
+        //     return this.$store.getters.transaction
+        // }
+        
+    },
+   
 
 }
 </script>
