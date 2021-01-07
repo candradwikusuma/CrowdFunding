@@ -18,7 +18,7 @@ class LoginController extends Controller
     {
         if(!$token=auth()->attempt($request->only('email','password'))){
             return response()->json([
-                'error'=>'Unauthorized'
+                'error'=>'Email dan Password tidak ditemukan'
             ],401);
         }
         $data['token']=$token;
