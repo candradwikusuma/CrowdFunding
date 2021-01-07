@@ -34,6 +34,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "campaign-item",
   props: ["campaign"],
@@ -66,7 +67,7 @@ var render = function() {
     [
       _c(
         "v-card",
-        { attrs: { to: "/campaign/" + _vm.campaign.id } },
+        { staticClass: "mr-1", attrs: { to: "/campaign/" + _vm.campaign.id } },
         [
           _c(
             "v-img",
@@ -85,6 +86,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "v-card-actions",
+            { staticClass: "mb-0" },
             [
               _c("v-progress-linear", {
                 attrs: { color: "blue-grey", height: "7" },
@@ -103,11 +105,11 @@ var render = function() {
           _c(
             "v-card-actions",
             [
-              _c("v-icon", { staticClass: "mr-2" }, [_vm._v("mdi-cash")]),
+              _c("v-icon", { staticClass: "mr-0 mt-0" }, [_vm._v("mdi-cash")]),
               _vm._v(" "),
               _c("span", [
                 _vm._v(
-                  "Rp " + _vm._s(_vm.campaign.required.toLocaleString("id-ID"))
+                  "Rp" + _vm._s(_vm.campaign.required.toLocaleString("id-ID"))
                 )
               ]),
               _vm._v(" "),

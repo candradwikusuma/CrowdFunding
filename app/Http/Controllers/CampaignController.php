@@ -67,7 +67,7 @@ class CampaignController extends Controller
     }
 
     public function index(){
-        $campaigns=Campaign::paginate(1);
+        $campaigns=Campaign::paginate(2);
 
         $data['campaigns']=$campaigns;
 
@@ -90,4 +90,18 @@ class CampaignController extends Controller
         ], 200);
     }
 
+    public function search($keyword)
+    {
+        $campaigns = Campaign::select('*')
+        ->where('title', 'LIKE', '%' . $keyword . '%')
+        ->get();
+
+        $data['campaigns']=$campaigns;
+        return response()->json([
+            'response_code'     => '00',
+            'response_message'  => 'Data campaigns berhasil ditampilkan!',
+            'data'              => $data
+        ], 200);
+
+    }
 }

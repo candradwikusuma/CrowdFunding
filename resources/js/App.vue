@@ -1,6 +1,17 @@
 <template>
     <v-app>
         <alert-component></alert-component>
+        <keep-alive>
+            <v-dialog 
+            v-model="dialog" 
+            fullscreen
+            persistent
+            hide-overlay   
+            transition="dialog-bottom-transition">
+                <!-- <search-component @closed="closeDialog"></search-component> -->
+                <component :is="currentComponent" @closed="setDialogStatus"></component>
+            </v-dialog>
+        </keep-alive>
         <!-- sidebar -->
         <v-navigation-drawer app v-model="drawer">
 
@@ -76,6 +87,7 @@
                 label="Search"
                 prepend-inner-icon="mdi-magnify"
                 solo-inverted
+               @click.stop="setDialogComponent('searchComponent')"
             ></v-text-field>
         </v-app-bar>
 
@@ -102,9 +114,9 @@
             <!-- content -->
             <v-container>
                 
-                <v-slider-y-transition>
+              
                 <router-view></router-view>
-                </v-slider-y-transition>
+                
             <!-- If using vue-router -->
             </v-container>
         </v-main>
@@ -121,13 +133,15 @@
     </v-app>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import AlertComponent from './components/AlertComponent.vue';
+import SearchComponent from './components/SearchComponent.vue';
 
 export default {
     name:'app',
     components: {
-        AlertComponent:() => import('./components/AlertComponent')
+        AlertComponent:() => import('./components/AlertComponent'),
+        SearchComponent:() => import('./components/SearchComponent')
     },
     data: ()=>({
         drawer:false,
@@ -136,19 +150,40 @@ export default {
             {title:'Campaigns',icon:'mdi-hand-heart',route:'/campaigns'},
         ],
         guest:false,
+        // dialog:false
     }),
     computed: {
         isHome() {
             return this.$route.path === "/" || this.$route.path === "/home";
         },
         ...mapGetters({
-            'transactions':'transaction/transactions'
+            'transactions':'transaction/transactions',
+            'dialogStatus':'dialog/status',
+            'currentComponent':'dialog/component'
+            
         }),
         // transaction(){
         //     return this.$store.getters.transaction
         // }
+        dialog:{
+            get(){
+                return this.dialogStatus
+            },
+            set(value){
+                return this.setDialogStatus(value)
+            }
+        }
         
     },
+    methods:{
+        // closeDialog(value){
+        //     this.dialog=value
+        // }
+        ...mapActions({
+            setDialogStatus:'dialog/setStatus',
+            setDialogComponent:'dialog/setComponent'
+        })
+    }
    
 
 }
